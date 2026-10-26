@@ -1,0 +1,36 @@
+# ── Runtime dependencies ──────────────────────────────────────────────────────
+# Keep in sync with library versions used at training time (see DESIGN.md §2.6).
+# When you retrain the model and update xgboost / scikit-learn, bump versions
+# here too, then rebuild models/sentinel_v1.pkl before deploying.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Web framework
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+
+# Database
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.9   # PostgreSQL driver (also works via DATABASE_URL on Neon)
+
+# Validation / serialisation
+pydantic>=2.7.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Data / ML runtime (model inference only – training stays local)
+pandas>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+xgboost>=2.0.0
+joblib>=1.4.0
+
+# Graph service
+networkx>=3.3
+
+# Config
+python-dotenv>=1.0.0
+
+# Rate limiting (DESIGN.md §3.7)
+slowapi>=0.1.9

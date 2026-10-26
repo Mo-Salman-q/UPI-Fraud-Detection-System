@@ -1,0 +1,53 @@
+{
+  "split": {
+    "train_rows": 6078970,
+    "val_rows": 194172,
+    "test_rows": 89478,
+    "train_step_max": 519,
+    "val_step_max": 630
+  },
+  "logistic_regression": {
+    "model": "LogisticRegression (test)",
+    "threshold": 0.9451,
+    "precision": 0.7868,
+    "recall": 0.8204,
+    "f1": 0.8033,
+    "pr_auc": 0.8741,
+    "fpr": 0.003185,
+    "tp": 1037,
+    "fp": 281,
+    "tn": 87933,
+    "fn": 227
+  },
+  "xgboost": {
+    "model": "XGBoost (test)",
+    "threshold": 0.5689,
+    "precision": 0.9976,
+    "recall": 0.9992,
+    "f1": 0.9984,
+    "pr_auc": 0.9994,
+    "fpr": 3.4e-05,
+    "tp": 1263,
+    "fp": 3,
+    "tn": 88211,
+    "fn": 1
+  },
+  "xgb_top10_features": {
+    "balance_error_orig": 0.30972257256507874,
+    "newbalanceOrig": 0.2312774956226349,
+    "log1p_newbalanceOrig": 0.21496233344078064,
+    "type_CASH_IN": 0.05868035554885864,
+    "oldbalanceOrg": 0.04669376462697983,
+    "log1p_oldbalanceOrg": 0.03486155718564987,
+    "type_PAYMENT": 0.02917732298374176,
+    "type_TRANSFER": 0.01931711845099926,
+    "amount": 0.018929414451122284,
+    "log_amount": 0.015013461001217365
+  },
+  "library_versions": {
+    "xgboost": "3.4.1",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6"
+  }
+}

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sentinel UPI — AI Fraud-Protected Mobile Payments</title>
+  <meta name="description" content="Research prototype simulating UPI payments with real-time ML fraud detection.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Mandatory Top Prototype Banner -->
+  <aside class="proto-banner" id="proto-banner" role="alert">
+    <span>⚠️ <strong>Prototype</strong> — simulated UPI, no real money</span>
+    <span class="badge">Research Only</span>
+  </aside>
+
+  <!-- Mobile Frame Container -->
+  <main class="mobile-frame" id="app-container">
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay" aria-live="polite">
+      <div class="pulse-spinner"></div>
+      <div class="loading-text" id="loading-text">Securing Payment...</div>
+      <div class="loading-subtext" id="loading-subtext">Evaluating real-time fraud risk with Sentinel AI</div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 1: DEMO LOGIN                                                    -->
+    <!-- ===================================================================== -->
+    <section class="view active" id="view-login" aria-label="Sign in">
+      <div class="login-hero">
+        <div class="login-logo" aria-hidden="true">🛡️</div>
+        <h2>Sentinel UPI</h2>
+        <p>Real-time ML Fraud Detection Prototype</p>
+      </div>
+
+      <div class="section-label">Select a Demo Customer</div>
+      <div class="demo-users-grid" id="demo-users-list">
+        <div class="demo-user-card" id="user-card-customer1" data-upi="customer1@sentinel">
+          <div class="user-info">
+            <div class="user-avatar">AS</div>
+            <div class="user-names">
+              <h4>Aarav Sharma</h4>
+              <span>customer1@sentinel • ₹50,000</span>
+            </div>
+          </div>
+          <div class="login-arrow">➔</div>
+        </div>
+
+        <div class="demo-user-card" id="user-card-customer2" data-upi="customer2@sentinel">
+          <div class="user-info">
+            <div class="user-avatar" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">DP</div>
+            <div class="user-names">
+              <h4>Diya Patel</h4>
+              <span>customer2@sentinel • ₹50,000</span>
+            </div>
+          </div>
+          <div class="login-arrow">➔</div>
+        </div>
+
+        <div class="demo-user-card" id="user-card-customer3" data-upi="customer3@sentinel">
+          <div class="user-info">
+            <div class="user-avatar" style="background: linear-gradient(135deg, #10b981, #06b6d4);">RI</div>
+            <div class="user-names">
+              <h4>Rohan Iyer</h4>
+              <span>customer3@sentinel • ₹50,000</span>
+            </div>
+          </div>
+          <div class="login-arrow">➔</div>
+        </div>
+
+        <div class="demo-user-card" id="user-card-customer4" data-upi="customer4@sentinel">
+          <div class="user-info">
+            <div class="user-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">AV</div>
+            <div class="user-names">
+              <h4>Ananya Verma</h4>
+              <span>customer4@sentinel • ₹50,000</span>
+            </div>
+          </div>
+          <div class="login-arrow">➔</div>
+        </div>
+
+        <div class="demo-user-card" id="user-card-customer5" data-upi="customer5@sentinel">
+          <div class="user-info">
+            <div class="user-avatar" style="background: linear-gradient(135deg, #6366f1, #3b82f6);">VS</div>
+            <div class="user-names">
+              <h4>Vikram Singh</h4>
+              <span>customer5@sentinel • ₹50,000</span>
+            </div>
+          </div>
+          <div class="login-arrow">➔</div>
+        </div>
+      </div>
+
+      <div class="custom-login-toggle">
+        <button class="link-btn" id="btn-toggle-custom-login" type="button">Use Custom UPI Login</button>
+      </div>
+
+      <form class="custom-login-form" id="custom-login-form" style="display: none;">
+        <div class="form-group">
+          <label for="custom-upi">UPI ID</label>
+          <input class="form-input" id="custom-upi" type="text" placeholder="e.g. customer1@sentinel" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="custom-password">Password</label>
+          <input class="form-input" id="custom-password" type="password" value="Demo1234!" autocomplete="current-password">
+        </div>
+        <button class="btn-primary" id="btn-custom-login" type="submit">Sign In</button>
+      </form>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 2: HOME DASHBOARD                                                -->
+    <!-- ===================================================================== -->
+    <section class="view" id="view-home" aria-label="Dashboard">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-icon">S</div>
+          <div class="brand-text">
+            <h1>Sentinel UPI</h1>
+            <p>Protected by AI</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" id="btn-logout" title="Sign out" aria-label="Sign out">🚪</button>
+        </div>
+      </header>
+
+      <!-- Profile Banner -->
+      <div class="profile-bar">
+        <div class="profile-meta">
+          <div class="profile-avatar" id="profile-avatar-letter">A</div>
+          <div class="profile-text">
+            <h3 id="profile-name">AARAV SHARMA</h3>
+            <span class="upi-tag" id="profile-upi">customer1@sentinel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Balance Card -->
+      <div class="balance-card">
+        <div class="balance-header">
+          <div class="bank-badge">
+            <span>🏛️</span> State Bank of Sentinel • 4021
+          </div>
+          <div class="balance-actions">
+            <button class="mini-icon-btn" id="btn-toggle-eye" title="Toggle visibility" aria-label="Show or hide balance">👁️</button>
+            <button class="mini-icon-btn" id="btn-refresh-balance" title="Refresh balance" aria-label="Refresh balance">🔄</button>
+          </div>
+        </div>
+
+        <div class="balance-display">
+          <div class="balance-label">Available Balance</div>
+          <div class="balance-amount" id="display-balance">₹50,000.00</div>
+        </div>
+
+        <div class="balance-footer">
+          <div class="ai-shield-tag">
+            <span>🛡️</span> 100% Sentinel AI Protected
+          </div>
+          <div>Instant UPI 2.0</div>
+        </div>
+      </div>
+
+      <!-- Quick Action CTA -->
+      <div class="quick-action-cta">
+        <button class="btn-pay-hero" id="btn-home-pay" type="button">
+          <span>⚡</span> Pay to Any UPI ID
+        </button>
+      </div>
+
+      <!-- Demo Payees Carousel -->
+      <div class="section-label">Demo Payees (1-Tap Select)</div>
+      <div class="payees-carousel" id="payees-carousel">
+        <div class="payee-chip" id="payee-chip-customer2" data-upi="customer2@sentinel">
+          <div class="payee-avatar">DP</div>
+          <div class="payee-name">Diya Patel</div>
+        </div>
+        <div class="payee-chip" id="payee-chip-customer3" data-upi="customer3@sentinel">
+          <div class="payee-avatar" style="background: linear-gradient(135deg, #10b981, #06b6d4);">RI</div>
+          <div class="payee-name">Rohan Iyer</div>
+        </div>
+        <div class="payee-chip" id="payee-chip-customer4" data-upi="customer4@sentinel">
+          <div class="payee-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">AV</div>
+          <div class="payee-name">Ananya Verma</div>
+        </div>
+        <div class="payee-chip" id="payee-chip-customer5" data-upi="customer5@sentinel">
+          <div class="payee-avatar" style="background: linear-gradient(135deg, #6366f1, #3b82f6);">VS</div>
+          <div class="payee-name">Vikram Singh</div>
+        </div>
+      <!-- Demo Simulation Panel (Triggers /dev/simulate/{scenario}) -->
+      <div class="demo-attack-panel" id="demo-attack-panel">
+        <div class="demo-panel-header" id="demo-panel-toggle" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div class="section-label" style="margin: 0; color: #a5b4fc;">⚡ Live Attack Simulator (Demo Mode)</div>
+          <span id="demo-panel-arrow" style="font-size: 0.75rem; color: #a5b4fc;">▼</span>
+        </div>
+        <div class="demo-panel-body" id="demo-panel-body" style="display: none; flex-direction: column; gap: 8px; margin-bottom: 8px;">
+          <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
+            Trigger real-time attack scenarios to test Sentinel AI fraud detection in the Admin Console:
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button class="btn-scenario" data-scenario="rapid_burst" type="button">
+              💥 <strong>Rapid Burst</strong><br><small style="color:var(--text-muted);">7 txns in &lt;2 min</small>
+            </button>
+            <button class="btn-scenario" data-scenario="new_device" type="button">
+              📱 <strong>New Device</strong><br><small style="color:var(--text-muted);">Unseen fingerprint</small>
+            </button>
+            <button class="btn-scenario" data-scenario="many_to_one" type="button">
+              👥 <strong>Many to One</strong><br><small style="color:var(--text-muted);">Mule funnel attack</small>
+            </button>
+            <button class="btn-scenario" data-scenario="split_payments" type="button">
+              ✂️ <strong>Split Payments</strong><br><small style="color:var(--text-muted);">Structuring evasion</small>
+            </button>
+          </div>
+          <div id="demo-scenario-status" style="font-size: 0.75rem; padding: 6px 10px; border-radius: 6px; display: none;"></div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions List -->
+      <div class="history-section">
+        <div class="history-header">
+          <div class="section-label">Recent Transactions</div>
+        </div>
+        <div class="history-list" id="history-list-container">
+          <div style="text-align:center; padding:16px; color:var(--text-muted); font-size:0.8rem;">
+            Loading transactions...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 3: PAY SCREEN                                                    -->
+    <!-- ===================================================================== -->
+    <section class="view" id="view-pay" aria-label="Send money">
+      <nav class="view-nav">
+        <button class="icon-btn btn-back-home" id="btn-back-from-pay" title="Back" aria-label="Back to home">←</button>
+        <h3>Send Money</h3>
+      </nav>
+
+      <div class="form-group">
+        <label for="input-payee-upi">Payee UPI ID</label>
+        <input class="form-input" id="input-payee-upi" type="text" placeholder="e.g. customer2@sentinel" autofocus>
+      </div>
+
+      <!-- Big Amount Input -->
+      <div class="amount-input-container">
+        <div style="margin-bottom: 6px; font-size: 0.8rem; color: var(--text-muted);">ENTER AMOUNT</div>
+        <div>
+          <span class="currency-symbol">₹</span>
+          <input class="amount-big-input" id="input-amount" type="number" min="1" step="any" value="500">
+        </div>
+        <div class="quick-amount-chips">
+          <button class="chip-btn" type="button" data-val="100">+₹100</button>
+          <button class="chip-btn" type="button" data-val="500">+₹500</button>
+          <button class="chip-btn" type="button" data-val="2000">+₹2,000</button>
+          <button class="chip-btn" type="button" data-val="15000">+₹15,000</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input-note">Add a Note (Optional)</label>
+        <input class="form-input" id="input-note" type="text" placeholder="e.g. Dinner split, Rent">
+      </div>
+
+      <!-- Simulation Context Drawer for Presenter / Attack Testing -->
+      <div class="simulation-box" id="simulation-box">
+        <div class="simulation-toggle" id="sim-drawer-toggle">
+          <span>⚙️ Demo Context Signals (Simulate Attack)</span>
+          <span>▼</span>
+        </div>
+        <div class="simulation-fields" id="sim-fields-container">
+          <div class="form-group" style="margin-bottom: 8px;">
+            <label for="sim-device-id">Device Fingerprint</label>
+            <input class="form-input" id="sim-device-id" type="text" value="phone-client-001">
+          </div>
+          <div class="form-group" style="margin-bottom: 8px;">
+            <label for="sim-city">City Location</label>
+            <input class="form-input" id="sim-city" type="text" value="Bengaluru">
+          </div>
+          <div class="form-group" style="margin-bottom: 4px;">
+            <label for="sim-ip">IP Address</label>
+            <input class="form-input" id="sim-ip" type="text" value="10.177.233.244">
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; padding-top: 14px;">
+        <button class="btn-primary" id="btn-proceed-pay" type="button">
+          Proceed to Pay
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 4: FAKE PIN SCREEN                                               -->
+    <!-- ===================================================================== -->
+    <section class="view" id="view-pin" aria-label="Enter UPI PIN">
+      <nav class="view-nav" style="margin-bottom: 10px;">
+        <button class="icon-btn" id="btn-back-to-pay" title="Back" aria-label="Back to pay screen">←</button>
+        <h3>Enter UPI PIN</h3>
+      </nav>
+
+      <div class="pin-view-content">
+        <div class="pin-summary">
+          <div class="pin-payee" id="pin-payee-display">Paying customer2@sentinel</div>
+          <div class="pin-amount" id="pin-amount-display">₹500.00</div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">
+            Enter 4-Digit Security PIN
+          </div>
+          <div class="pin-dots-container" id="pin-dots-container">
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+          </div>
+        </div>
+
+        <!-- Touch / Click Numeric Keypad -->
+        <div class="keypad-grid" id="keypad-grid">
+          <button class="key-btn key-digit" data-key="1" type="button">1</button>
+          <button class="key-btn key-digit" data-key="2" type="button">2</button>
+          <button class="key-btn key-digit" data-key="3" type="button">3</button>
+          <button class="key-btn key-digit" data-key="4" type="button">4</button>
+          <button class="key-btn key-digit" data-key="5" type="button">5</button>
+          <button class="key-btn key-digit" data-key="6" type="button">6</button>
+          <button class="key-btn key-digit" data-key="7" type="button">7</button>
+          <button class="key-btn key-digit" data-key="8" type="button">8</button>
+          <button class="key-btn key-digit" data-key="9" type="button">9</button>
+          <button class="key-btn action-btn" id="key-backspace" type="button" aria-label="Backspace">⌫</button>
+          <button class="key-btn key-digit" data-key="0" type="button">0</button>
+          <button class="key-btn submit-key" id="key-submit" type="button" aria-label="Confirm PIN">✓</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 5A: RESULT - COMPLETED (ALLOW)                                   -->
+    <!-- ===================================================================== -->
+    <section class="view" id="view-result-completed" aria-label="Payment successful">
+      <div class="result-container">
+        <div class="result-icon-wrapper success">✓</div>
+        <h2 class="result-title" style="color: var(--emerald);">Payment Successful</h2>
+        <div class="result-amount" id="res-completed-amt">₹500.00</div>
+
+        <div class="result-card">
+          <div class="result-card-row">
+            <span>Sent To</span>
+            <span id="res-completed-to">customer2@sentinel</span>
+          </div>
+          <div class="result-card-row">
+            <span>Transaction ID</span>
+            <span id="res-completed-id">#1024</span>
+          </div>
+          <div class="result-card-row">
+            <span>Status</span>
+            <span style="color: var(--emerald);">COMPLETED</span>
+          </div>
+          <div class="result-card-row">
+            <span>Risk Assessment</span>
+            <span style="color: var(--emerald);">Low Risk (ALLOW)</span>
+          </div>
+        </div>
+
+        <p class="result-explanation" id="res-completed-msg">
+          Transaction approved and ledger balance updated.
+        </p>
+
+        <div class="result-actions">
+          <button class="btn-primary btn-back-home" type="button">Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 5B: RESULT - STEP-UP ("Is this you?")                            -->
+    <!-- ===================================================================== -->
+    <section class="view" id="view-result-stepup" aria-label="Verification required">
+      <div class="result-container">
+        <div class="result-icon-wrapper stepup">⚠️</div>
+        <h2 class="result-title" style="color: var(--amber);">Is this you?</h2>
+        <div class="result-amount" id="res-stepup-amt">₹12,500.00</div>
+
+        <div class="result-card">
+          <div class="result-card-row">
+            <span>Target Payee</span>
+            <span id="res-stepup-to">customer3@sentinel</span>
+          </div>
+          <div class="result-card-row">
+            <span>Reference ID</span>
+            <span id="res-stepup-id">#1025</span>
+          </div>
+          <div class="result-card-row">
+            <span>Current Status</span>
+            <span style="color: var(--amber);">PENDING CONFIRMATION</span>
+          </div>
+          <div class="result-card-row">
+            <span>Risk Level</span>
+            <span style="color: var(--amber);">Medium (STEP_UP)</span>
+          </div>
+        </div>
+
+        <p class="result-explanation" id="res-stepup-msg">
+          Sentinel AI detected an unusual pattern (e.g. high transfer value, new payee, or novel device).
+          To protect your funds, please confirm if you authorized this payment.
+        </p>
+
+        <div class="result-actions">
+          <button class="btn-primary btn-stepup-confirm" id="btn-stepup-confirm" type="button">
+            ✓ Yes, Confirm & Send Money
+          </button>
+          <button class="btn-secondary" id="btn-stepup-cancel" type="button">
+            ✕ No, Cancel Transaction
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 5C: RESULT - HELD FOR REVIEW (HOLD)                              -->
+    <!-- ===================================================================== -->
+    <section class="view" id="view-result-hold" aria-label="Payment held">
+      <div class="result-container">
+        <div class="result-icon-wrapper hold">🛑</div>
+        <h2 class="result-title" style="color: var(--rose);">Payment On Hold</h2>
+        <div class="result-amount" id="res-hold-amt">₹48,000.00</div>
+
+        <div class="result-card">
+          <div class="result-card-row">
+            <span>Intended Payee</span>
+            <span id="res-hold-to">customer4@sentinel</span>
+          </div>
+          <div class="result-card-row">
+            <span>Alert ID</span>
+            <span id="res-hold-id">#1026</span>
+          </div>
+          <div class="result-card-row">
+            <span>Status</span>
+            <span style="color: var(--rose);">HELD FOR REVIEW</span>
+          </div>
+          <div class="result-card-row">
+            <span>Account Balance</span>
+            <span style="color: var(--emerald);">NOT Deducted</span>
+          </div>
+        </div>
+
+        <p class="result-explanation" id="res-hold-msg">
+          This payment was stopped by Sentinel AI's fraud detection engine and routed to the fraud analyst queue.
+          Your account has not been debited. An analyst will review this shortly.
+        </p>
+
+        <div class="result-actions">
+          <a class="btn-secondary" href="/admin-ui/" style="text-align: center; text-decoration: none;">
+            🔍 Open Admin Console Queue
+          </a>
+          <button class="btn-primary btn-back-home" type="button">Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

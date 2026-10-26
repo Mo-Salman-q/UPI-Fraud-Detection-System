@@ -1,0 +1,20 @@
+# ── Dev / local-only dependencies ────────────────────────────────────────────
+# Install with: pip install -r requirements-dev.txt
+# These are NOT installed on the Render production server (DESIGN.md §3.3).
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Explainability (use XGBoost pred_contribs in production to avoid importing shap)
+shap>=0.45.0
+
+# Drift monitoring (run offline; output saved to reports/drift.html)
+evidently>=0.4.0
+
+# Notebooks for exploration and reporting
+jupyter>=1.0.0
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+
+# Visualisation (notebooks / offline plots)
+matplotlib>=3.8.0
